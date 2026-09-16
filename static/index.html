@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>المُفسِّر | QAcart</title>
+		<link rel="icon" href="/static/favicon.svg" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Readex+Pro:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="/static/style.css" />
+		<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+	</head>
+	<body>
+		<header class="topbar">
+			<div class="brand">
+				<img src="/static/favicon.svg" alt="QAcart" />
+				<span>QAcart</span>
+			</div>
+			<button id="new-chat" class="ghost-btn" type="button">محادثة جديدة</button>
+		</header>
+
+		<main id="chat" class="chat" data-testid="chat">
+			<section id="welcome" class="welcome">
+				<span class="eyebrow">مساعد تعليمي بالذكاء الاصطناعي</span>
+				<h1 class="heading">المُفسِّر — <span class="grad">اشرحلي أي موضوع</span></h1>
+				<p class="intro">
+					اكتب أي موضوع بدك تفهمه، ورح أشرحلك إياه باللهجة الأردنية بأسلوب واضح ومهني، مع أمثلة عملية.
+				</p>
+				<div class="suggestions">
+					<button class="chip" type="button">شو هو الـ API؟</button>
+					<button class="chip" type="button">الفرق بين Unit و E2E testing</button>
+					<button class="chip" type="button">كيف بشتغل الـ LLM؟</button>
+					<button class="chip" type="button">شو يعني RAG؟</button>
+				</div>
+			</section>
+		</main>
+
+		<form id="composer" class="composer" data-testid="composer">
+			<textarea
+				id="topic"
+				data-testid="topic-input"
+				rows="1"
+				placeholder="اكتب الموضوع اللي بدك تفهمه…"
+				required
+			></textarea>
+			<button id="send" data-testid="send-button" type="submit" aria-label="إرسال">
+				<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+			</button>
+		</form>
+
+		<script src="/static/app.js"></script>
+	</body>
+</html>

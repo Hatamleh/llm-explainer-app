@@ -1,0 +1,11 @@
+[project]
+name = "llm-explainer-app"
+version = "0.1.0"
+description = "Arabic LLM explainer chat app (FastAPI + OpenRouter) for the QAcart DeepEval course"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.141.1",
+    "openai>=3.15.0",
+    "python-dotenv>=1.2.3",
+    "uvicorn[standard]>=0.53.0",
+]

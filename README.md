@@ -11,8 +11,18 @@ Give it any topic and it explains it in professional Jordanian Arabic, rendered 
 
 ## Requirements
 
-- Python **3.10+** — check with `python3 --version`
+- [**uv**](https://docs.astral.sh/uv/) — the Python package manager. It also installs the right Python version for you.
 - An **OpenRouter API key** — create one at https://openrouter.ai/keys
+
+Install uv (once):
+
+```bash
+# macOS / Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows (PowerShell)
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
 
 ## Run it
 
@@ -23,23 +33,14 @@ git clone https://github.com/Hatamleh/llm-explainer-app.git
 cd llm-explainer-app
 ```
 
-### 2. Create a virtual environment and install dependencies
-
-macOS / Linux:
+### 2. Install dependencies
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+uv sync
 ```
 
-Windows (PowerShell):
-
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-```
+This creates `.venv/` with Python 3.12 and the exact versions from `uv.lock`.
+No need to activate the virtual environment — `uv run` uses it automatically.
 
 ### 3. Add your API key
 
@@ -61,7 +62,7 @@ OPENROUTER_MODEL="google/gemini-3.5-flash"
 ### 4. Start the app
 
 ```bash
-uvicorn app.main:app --reload
+uv run uvicorn app.main:app --reload
 ```
 
 Open **http://127.0.0.1:8000** and ask about any topic.
@@ -80,7 +81,9 @@ static/
   index.html   ← chat page
   style.css    ← QAcart theme
   app.js       ← sends the topic, renders the Markdown answer
-requirements.txt
+pyproject.toml   ← dependencies (managed by uv)
+uv.lock          ← exact locked versions
+.python-version  ← Python 3.12
 .env.example
 ```
 
@@ -89,6 +92,7 @@ requirements.txt
 The LLM logic lives in `app/llm.py`, separate from the web server, so tests can call it directly:
 
 ```python
+# run with: uv run python your_script.py
 from app.llm import explain
 
 answer = explain("شو هو الـ API؟")
@@ -114,10 +118,18 @@ Response:
 Set `OPENROUTER_MODEL` in `.env` to any model ID from https://openrouter.ai/models
 (for example `openai/gpt-5.4-mini` or `anthropic/claude-haiku-4.5`), then restart the server.
 
+## Adding a dependency
+
+```bash
+uv add <package>
+```
+
+This updates `pyproject.toml` and `uv.lock` — commit both.
+
 ## Troubleshooting
 
 | Problem | Fix |
 |---|---|
-| `uvicorn: command not found` | Activate the virtual environment first (step 2). |
+| `uv: command not found` | Install uv (see Requirements), then open a new terminal. |
 | Error bubble in the chat / `401` | `OPENROUTER_API_KEY` in `.env` is missing or wrong. |
-| `Address already in use` | Another app uses port 8000 — run `uvicorn app.main:app --reload --port 8001`. |
+| `Address already in use` | Another app uses port 8000 — run `uv run uvicorn app.main:app --reload --port 8001`. |
